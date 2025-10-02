@@ -77,19 +77,18 @@
         .star {
             position: absolute;
             top: -20px; /* 화면 밖에서 시작 */
-            width: 10px;
-            height: 10px;
+            width: 16px; /* 크기 증가 (기존 10px) */
+            height: 16px; /* 크기 증가 (기존 10px) */
             background-color: transparent;
             cursor: pointer;
             
-            /* 픽셀 모양의 별 만들기 */
+            /* 픽셀 모양의 별 만들기 (크기 조정) */
             box-shadow: 
-                0 0 0 1px var(--star-yellow),
-                0 0 0 2px var(--star-yellow),
-                -1px -1px 0 1px var(--star-yellow),
-                1px 1px 0 1px var(--star-yellow),
-                -1px 1px 0 1px var(--star-yellow),
-                1px -1px 0 1px var(--star-yellow);
+                0 0 0 2px var(--star-yellow), /* 중앙 픽셀 크기 증가 */
+                -2px -2px 0 2px var(--star-yellow), /* 주변 픽셀 위치/크기 조정 */
+                2px 2px 0 2px var(--star-yellow),
+                -2px 2px 0 2px var(--star-yellow),
+                2px -2px 0 2px var(--star-yellow);
             transition: opacity 0.1s ease-out;
         }
 
@@ -210,8 +209,8 @@
     <script>
         const GAME_DURATION = 20; // 20초 제한 시간
         const STAR_SPAWN_RATE = 800; // 별 생성 간격 (ms)
-        const STAR_FALL_DURATION_MIN = 3; // 별 낙하 시간 최소 (s)
-        const STAR_FALL_DURATION_MAX = 6; // 별 낙하 시간 최대 (s)
+        const STAR_FALL_DURATION_MIN = 5; // 별 낙하 시간 최소 (s) - 속도 감소 (기존 3초)
+        const STAR_FALL_DURATION_MAX = 10; // 별 낙하 시간 최대 (s) - 속도 감소 (기존 6초)
 
         const scoreValueEl = document.getElementById('score-value');
         const timerValueEl = document.getElementById('timer-value');
@@ -241,7 +240,8 @@
             // 1. 랜덤 위치 설정 (컨테이너 폭 내에서)
             const containerWidth = gameContainer.clientWidth;
             // 별이 완전히 보이도록, 별 크기만큼 여유를 줌
-            const randomX = Math.random() * (containerWidth - 20) + 10; 
+            // 별 크기가 16px로 커졌으므로 20 대신 30 정도 사용
+            const randomX = Math.random() * (containerWidth - 30) + 15; 
             star.style.left = `${randomX}px`;
 
             // 2. 랜덤 낙하 속도 설정 (CSS 애니메이션 duration)
